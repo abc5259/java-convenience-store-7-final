@@ -1,6 +1,8 @@
 package store.controller;
 
 
+import java.util.Map;
+import store.domain.Product;
 import store.view.OutputView;
 
 public class StoreController {
@@ -13,7 +15,7 @@ public class StoreController {
         this.outputView = outputView;
     }
 
-    public void process() {
+    public void process(Map<String, Product> products) {
 
     }
 }

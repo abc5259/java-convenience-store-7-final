@@ -16,4 +16,8 @@ public class Promotion {
         this.startDate = startDate;
         this.endDate = endDate;
     }
+
+    public boolean isEqualName(String name) {
+        return this.name.equals(name.trim());
+    }
 }

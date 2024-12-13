@@ -1,26 +1,66 @@
 package store.io;
 
 import java.nio.file.Path;
+import java.util.LinkedHashMap;
 import java.util.List;
-import store.converter.Converter;
+import java.util.Map;
+import store.converter.StringToIntConverter;
+import store.domain.Product;
 import store.domain.Promotion;
 
 public class ProductInit {
 
-    public static final Path PROMOTION_PATH = Path.of("src/main/resources/promotions.md");
+    public static final Path PRODUCT_PATH = Path.of("src/main/resources/products.md");
 
-    private final Converter<String, Promotion> converter;
     private final FileReader fileReader;
 
-    public ProductInit(Converter<String, Promotion> converter, FileReader fileReader) {
-        this.converter = converter;
+    public ProductInit(FileReader fileReader) {
         this.fileReader = fileReader;
     }
 
-    public List<Promotion> init() {
-        List<String> lines = fileReader.readAllLines(PROMOTION_PATH);
-        return lines.stream()
-                .map(converter::convert)
-                .toList();
+    public Map<String, Product> init(List<Promotion> promotions) {
+        List<String> lines = fileReader.readAllLines(PRODUCT_PATH);
+
+        Map<String, Product> products = new LinkedHashMap<>();
+        StringToIntConverter stringToIntConverter = new StringToIntConverter();
+        for (String line : lines) {
+            String[] sources = line.split(",");
+            if (sources.length != 4) {
+                throw new IllegalArgumentException("잘못된 형식입니다.");
+            }
+            String name = sources[0].trim();
+            int price = stringToIntConverter.convert(sources[1].trim());
+            int quantity = stringToIntConverter.convert(sources[2].trim());
+            String promotionName = sources[3].trim();
+            Promotion promotion = promotions.stream()
+                    .filter(promo -> promo.isEqualName(promotionName))
+                    .findFirst().orElse(null);
+            putProduct(products, name, promotion, quantity, price);
+        }
+
+        return products;
+    }
+
+    private void putProduct(Map<String, Product> products,
+                            String name,
+                            Promotion promotion,
+                            int quantity,
+                            int price) {
+        if (products.containsKey(name)) {
+            incrementQuantity(products, name, promotion, quantity);
+            return;
+        }
+        Product product = new Product(name, price, promotion, quantity);
+        products.put(name, product);
+    }
+
+    private void incrementQuantity(Map<String, Product> products, String name, Promotion promotion,
+                                   int quantity) {
+        Product product = products.get(name);
+        if (promotion == null) {
+            product.incrementSimpleQuantity(quantity);
+            return;
+        }
+        product.incrementPromotionQuantity(quantity);
     }
 }

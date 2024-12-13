@@ -5,6 +5,7 @@ import store.controller.IteratorInputTemplate;
 import store.controller.StoreController;
 import store.converter.StringToPromotionConverter;
 import store.io.FileReader;
+import store.io.ProductInit;
 import store.io.PromotionInit;
 import store.view.InputView;
 import store.view.OutputView;
@@ -18,6 +19,7 @@ public class StoreConfig {
     private StoreController storeController;
     private FileReader fileReader;
     private PromotionInit promotionInit;
+    private ProductInit productInit;
 
     public InputView inputView() {
         if (inputView == null) {
@@ -66,5 +68,12 @@ public class StoreConfig {
             promotionInit = new PromotionInit(new StringToPromotionConverter(), fileReader());
         }
         return promotionInit;
+    }
+
+    public ProductInit productInit() {
+        if (productInit == null) {
+            productInit = new ProductInit(fileReader());
+        }
+        return productInit;
     }
 }
