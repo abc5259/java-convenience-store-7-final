@@ -35,4 +35,28 @@ public class Product {
     public void incrementPromotionQuantity(int quantity) {
         this.promotionQuantity += quantity;
     }
+
+    public boolean hasPromotion() {
+        return this.promotion != null;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public int getSimpleProductQuantity() {
+        return simpleProductQuantity;
+    }
+
+    public int getPromotionQuantity() {
+        return promotionQuantity;
+    }
+
+    public String getPromotionName() {
+        return promotion.getName();
+    }
 }
