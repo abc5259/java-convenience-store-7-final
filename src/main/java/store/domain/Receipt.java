@@ -45,9 +45,19 @@ public class Receipt {
     }
 
     public int getFinalAmount() {
-        int giveawayPrice = getGiveawayPurchaseInfo().stream()
+        int giveawayPrice = getGiveawayPrice();
+        return getTotalAmount() - giveawayPrice - getDiscountAmount();
+    }
+
+    public int getGiveawayPrice() {
+        return getGiveawayPurchaseInfo().stream()
                 .mapToInt(PurchaseInfo::calculatePrice)
                 .sum();
-        return getTotalAmount() - giveawayPrice - getDiscountAmount();
+    }
+
+    public int getTotalQuantity() {
+        return purchaseHistories.stream()
+                .mapToInt(PurchaseHistory::getQuantity)
+                .sum();
     }
 }

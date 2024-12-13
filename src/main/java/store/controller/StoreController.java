@@ -46,6 +46,7 @@ public class StoreController {
         }
         Answer answer = iteratorInputHandler.inputMembershipDiscountAnswer();
         MembershipDiscount memberShipDiscount = new MembershipDiscount(answer);
-        Receipt receipt = store.purchase(cart, memberShipDiscount, DateTimes.now().toLocalDate());
+        Receipt receipt = store.purchase(new Cart(newOrderItems), memberShipDiscount, DateTimes.now().toLocalDate());
+        outputView.printReceipt(receipt);
     }
 }

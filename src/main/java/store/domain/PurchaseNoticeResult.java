@@ -8,6 +8,7 @@ public record PurchaseNoticeResult(
 
     public OrderItem calculateNewOrderItem(Answer answer) {
         if (notice == Notice.MORE_QUANTITY && answer == Answer.YES) {
+
             return orderItem.incrementCount(quantity);
         }
 

@@ -25,4 +25,8 @@ public record PurchaseHistory(
     public int getPurchaseAmount() {
         return product.calculatePrice(orderItem.count());
     }
+
+    public int getQuantity() {
+        return orderItem.count();
+    }
 }
