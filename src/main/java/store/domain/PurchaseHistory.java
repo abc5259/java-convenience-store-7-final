@@ -9,4 +9,8 @@ public record PurchaseHistory(
     public int getPromotionNotApplyAmount(LocalDate date) {
         return product.calculateOutOfPromotionQuantity(orderItem.count(), date);
     }
+
+    public PurchaseInfo getPurchaseInfo() {
+        return new PurchaseInfo(orderItem.name(), product.getPrice(), orderItem.count());
+    }
 }

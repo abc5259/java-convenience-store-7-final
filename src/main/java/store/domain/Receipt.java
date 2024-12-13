@@ -20,4 +20,10 @@ public class Receipt {
                 .mapToInt(purchaseHistory -> purchaseHistory.getPromotionNotApplyAmount(date))
                 .sum();
     }
+
+    public List<PurchaseInfo> getPurchaseInfo() {
+        return purchaseHistories.stream()
+                .map(PurchaseHistory::getPurchaseInfo)
+                .toList();
+    }
 }
