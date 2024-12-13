@@ -140,4 +140,8 @@ public class Product {
     public Product copy() {
         return new Product(name, price, promotion, simpleProductQuantity, promotionQuantity);
     }
+
+    public int calculatePrice(int count) {
+        return this.price * count;
+    }
 }

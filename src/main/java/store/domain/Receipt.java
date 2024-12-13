@@ -33,4 +33,10 @@ public class Receipt {
                 .filter(purchaseInfo -> purchaseInfo.quantity() != 0)
                 .toList();
     }
+
+    public int getTotalAmount() {
+        return purchaseHistories.stream()
+                .mapToInt(PurchaseHistory::getPurchaseAmount)
+                .sum();
+    }
 }

@@ -21,4 +21,8 @@ public record PurchaseHistory(
                 product.calculateGiveawayQuantity(orderItem.count(), date)
         );
     }
+
+    public int getPurchaseAmount() {
+        return product.calculatePrice(orderItem.count());
+    }
 }
