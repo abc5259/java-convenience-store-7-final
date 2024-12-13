@@ -80,6 +80,12 @@ public class Product {
         return promotion.getFreeCount();
     }
 
+    // 프로모션 재고가 얼마나 부족한지 여부
+    public boolean isOutOfPromotionQuantity(int purchaseQuantity, LocalDate date) {
+        return calculateOutOfPromotionQuantity(purchaseQuantity, date) != 0;
+    }
+
+    // 프로모션 재고가 얼마나 부족한지 계산
     public int calculateOutOfPromotionQuantity(int purchaseQuantity, LocalDate date) {
         if (isNotApplyPromotion(date)) {
             return 0;
@@ -106,9 +112,6 @@ public class Product {
     }
 
     private boolean isNotApplyPromotion(LocalDate date) {
-        if (promotion == null || !promotion.isApply(date)) {
-            return true;
-        }
-        return false;
+        return promotion == null || !promotion.isApply(date);
     }
 }

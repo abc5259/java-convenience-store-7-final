@@ -1,7 +1,10 @@
 package store.controller;
 
+import store.converter.StringToAnswerConverter;
 import store.converter.StringToCartConverter;
+import store.domain.Answer;
 import store.domain.Cart;
+import store.domain.PurchaseNoticeResult;
 import store.domain.Store;
 import store.view.InputView;
 
@@ -24,6 +27,13 @@ public class IteratorInputHandler {
                     store.validatePurchase(cart);
                     return cart;
                 }
+        );
+    }
+
+    public Answer inputPurchaseNoticeResultAnswer(PurchaseNoticeResult result) {
+        return iteratorInputTemplate.execute(
+                () -> inputView.readPurchaseNoticeAnswer(result),
+                new StringToAnswerConverter()
         );
     }
 }

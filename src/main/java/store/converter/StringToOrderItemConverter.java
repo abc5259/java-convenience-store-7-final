@@ -5,6 +5,7 @@ import store.domain.OrderItem;
 public class StringToOrderItemConverter implements Converter<String, OrderItem> {
     @Override
     public OrderItem convert(String source) {
+        source = source.trim();
         if (!source.startsWith("[") || !source.endsWith("]")) {
             throw new IllegalArgumentException("올바르지 않은 형식으로 입력했습니다. 다시 입력해 주세요.");
         }

@@ -10,18 +10,24 @@ class ProductTest {
 
     @ParameterizedTest
     @CsvSource({
-            "7, 10, 4",
-            "8, 10, 4",
-            "9, 10, 1",
-            "3, 10, 7",
-            "3, 2, 0",
-            "3, 1, 1",
+            "7, 10, 2, 1, 4",
+            "8, 10, 2, 1, 4",
+            "9, 10, 2, 1, 1",
+            "3, 10, 2, 1, 7",
+            "3, 2, 2, 1, 0",
+            "3, 1, 2, 1, 1",
+            "5, 5, 1, 1, 1",
     })
-    void 프로모션_혜택을_받지못하는_수량을_계산한다(int promotionQuantity, int purchaseQuantity, int expected) {
+    void 프로모션_혜택을_받지못하는_수량을_계산한다(
+            int promotionQuantity,
+            int purchaseQuantity,
+            int buyCount,
+            int freeCount,
+            int expected) {
         //given
         LocalDate startDate = LocalDate.of(2024, 12, 11);
         LocalDate endDate = LocalDate.of(2024, 12, 14);
-        Promotion promotion = new Promotion("test", 2, 1, startDate, endDate);
+        Promotion promotion = new Promotion("test", buyCount, freeCount, startDate, endDate);
         Product product = new Product("test", 1000, promotion, 10, promotionQuantity);
 
         //when
