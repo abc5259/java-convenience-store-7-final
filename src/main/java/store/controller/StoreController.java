@@ -25,9 +25,9 @@ public class StoreController {
     }
 
     public void process(Map<String, Product> products) {
-        outputView.printHelloMessage();
-        outputView.printProducts(products);
         Store store = new Store(products);
+        outputView.printHelloMessage();
+        outputView.printProducts(store.getProducts());
 
         Cart cart = iteratorInputHandler.inputCart(store);
         List<PurchaseNoticeResult> purchaseNoticeResults = store.calculatePurchaseNoticeResults(
@@ -42,5 +42,7 @@ public class StoreController {
             Answer answer = iteratorInputHandler.inputPurchaseNoticeResultAnswer(purchaseNoticeResult);
             newOrderItems.add(purchaseNoticeResult.calculateNewOrderItem(answer));
         }
+
+//        Receipt receipt = store.purchase(cart, ,DateTimes.now().toLocalDate());
     }
 }

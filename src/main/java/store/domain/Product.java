@@ -114,4 +114,21 @@ public class Product {
     private boolean isNotApplyPromotion(LocalDate date) {
         return promotion == null || !promotion.isApply(date);
     }
+
+    public void purchase(int count) {
+        if (promotion == null) {
+            this.simpleProductQuantity -= count;
+            return;
+        }
+
+        this.promotionQuantity -= count;
+        if (promotionQuantity < 0) {
+            simpleProductQuantity -= promotionQuantity;
+            promotionQuantity = 0;
+        }
+    }
+
+    public Product copy() {
+        return new Product(name, price, promotion, simpleProductQuantity, promotionQuantity);
+    }
 }

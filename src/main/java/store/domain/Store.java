@@ -2,6 +2,7 @@ package store.domain;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,10 @@ public class Store {
 
     public Store(Map<String, Product> products) {
         this.products = products;
+    }
+
+    public Map<String, Product> getProducts() {
+        return Collections.unmodifiableMap(products);
     }
 
     public void validatePurchase(Cart cart) {
@@ -24,7 +29,7 @@ public class Store {
 
         Product product = products.get(orderItem.name());
         if (!product.canPurchase(orderItem.count())) {
-            throw new IllegalArgumentException("재고 수량을 초과하여 구매할 수 없습니다.");
+            throw new IllegalArgumentException("재고 수량을 초과하여 구매할 수 없습니다. 다시 입력해 주세요.");
         }
     }
 
@@ -56,5 +61,17 @@ public class Store {
         }
 
         return new PurchaseNoticeResult(orderItem, Notice.GOOD, 0);
+    }
+
+    public Receipt purchase(Cart cart, MemberShipDiscount memberShipDiscount, LocalDate date) {
+        List<PurchaseHistory> purchaseHistories = new ArrayList<>();
+        for (OrderItem orderItem : cart.getOrderItems()) {
+            Product product = products.get(orderItem.name());
+            PurchaseHistory purchaseHistory = new PurchaseHistory(product.copy(), orderItem);
+            purchaseHistories.add(purchaseHistory);
+
+            product.purchase(orderItem.count());
+        }
+        return new Receipt(purchaseHistories, memberShipDiscount, date);
     }
 }
