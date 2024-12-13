@@ -1,12 +1,12 @@
 package store.domain;
 
-public class MemberShipDiscount {
+public class MembershipDiscount {
 
     private static final int MAX_DISCOUNT_AMOUNT = 8000;
 
     private final Answer answer;
 
-    public MemberShipDiscount(Answer answer) {
+    public MembershipDiscount(Answer answer) {
         this.answer = answer;
     }
 

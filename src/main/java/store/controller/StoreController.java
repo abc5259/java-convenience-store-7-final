@@ -7,10 +7,12 @@ import java.util.List;
 import java.util.Map;
 import store.domain.Answer;
 import store.domain.Cart;
+import store.domain.MembershipDiscount;
 import store.domain.Notice;
 import store.domain.OrderItem;
 import store.domain.Product;
 import store.domain.PurchaseNoticeResult;
+import store.domain.Receipt;
 import store.domain.Store;
 import store.view.OutputView;
 
@@ -42,7 +44,8 @@ public class StoreController {
             Answer answer = iteratorInputHandler.inputPurchaseNoticeResultAnswer(purchaseNoticeResult);
             newOrderItems.add(purchaseNoticeResult.calculateNewOrderItem(answer));
         }
-
-//        Receipt receipt = store.purchase(cart, ,DateTimes.now().toLocalDate());
+        Answer answer = iteratorInputHandler.inputMembershipDiscountAnswer();
+        MembershipDiscount memberShipDiscount = new MembershipDiscount(answer);
+        Receipt receipt = store.purchase(cart, memberShipDiscount, DateTimes.now().toLocalDate());
     }
 }

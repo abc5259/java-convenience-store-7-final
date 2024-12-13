@@ -6,10 +6,10 @@ import java.util.List;
 public class Receipt {
 
     private final List<PurchaseHistory> purchaseHistories;
-    private final MemberShipDiscount memberShipDiscount;
+    private final MembershipDiscount memberShipDiscount;
     private final LocalDate date;
 
-    public Receipt(List<PurchaseHistory> purchaseHistories, MemberShipDiscount memberShipDiscount, LocalDate date) {
+    public Receipt(List<PurchaseHistory> purchaseHistories, MembershipDiscount memberShipDiscount, LocalDate date) {
         this.purchaseHistories = purchaseHistories;
         this.memberShipDiscount = memberShipDiscount;
         this.date = date;

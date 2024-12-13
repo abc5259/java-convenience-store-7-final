@@ -63,7 +63,7 @@ public class Store {
         return new PurchaseNoticeResult(orderItem, Notice.GOOD, 0);
     }
 
-    public Receipt purchase(Cart cart, MemberShipDiscount memberShipDiscount, LocalDate date) {
+    public Receipt purchase(Cart cart, MembershipDiscount memberShipDiscount, LocalDate date) {
         List<PurchaseHistory> purchaseHistories = new ArrayList<>();
         for (OrderItem orderItem : cart.getOrderItems()) {
             Product product = products.get(orderItem.name());

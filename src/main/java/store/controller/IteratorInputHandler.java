@@ -36,4 +36,11 @@ public class IteratorInputHandler {
                 new StringToAnswerConverter()
         );
     }
+
+    public Answer inputMembershipDiscountAnswer() {
+        return iteratorInputTemplate.execute(
+                inputView::inputMembershipDiscount,
+                new StringToAnswerConverter()
+        );
+    }
 }
