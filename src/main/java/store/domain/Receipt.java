@@ -39,4 +39,8 @@ public class Receipt {
                 .mapToInt(PurchaseHistory::getPurchaseAmount)
                 .sum();
     }
+
+    public int getDiscountAmount() {
+        return memberShipDiscount.calculateDiscountAmount(this);
+    }
 }
