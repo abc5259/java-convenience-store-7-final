@@ -24,4 +24,25 @@ public class Promotion {
     public String getName() {
         return name;
     }
+
+    public int getFreeCount() {
+        return freeCount;
+    }
+
+    public boolean canMorePurchaseQuantity(int promotionQuantity, int purchaseQuantity) {
+        if (purchaseQuantity + freeCount > promotionQuantity) {
+            return false;
+        }
+
+        return purchaseQuantity % (buyCount + freeCount) == buyCount;
+    }
+
+    public int getTotalBenefitQuantity() {
+        return buyCount + freeCount;
+    }
+
+    public boolean isApply(LocalDate date) {
+        return (startDate.isEqual(date) || startDate.isBefore(date)) &&
+                (endDate.isEqual(date) || endDate.isAfter(date));
+    }
 }

@@ -1,5 +1,7 @@
 package store.domain;
 
+import java.time.LocalDate;
+
 public class Product {
     private final String name;
     private final int price;
@@ -62,5 +64,51 @@ public class Product {
 
     public boolean canPurchase(int count) {
         return this.simpleProductQuantity + this.promotionQuantity >= count;
+    }
+
+    public boolean canMorePurchaseQuantity(int purchaseQuantity, LocalDate date) {
+        if (isNotApplyPromotion(date)) {
+            return false;
+        }
+        return promotion.canMorePurchaseQuantity(promotionQuantity, purchaseQuantity);
+    }
+
+    public int calculatePromotionFreeQuantity(int purchaseQuantity, LocalDate date) {
+        if (!canMorePurchaseQuantity(purchaseQuantity, date)) {
+            return 0;
+        }
+        return promotion.getFreeCount();
+    }
+
+    public int calculateOutOfPromotionQuantity(int purchaseQuantity, LocalDate date) {
+        if (isNotApplyPromotion(date)) {
+            return 0;
+        }
+        if (canMorePurchaseQuantity(purchaseQuantity, date)) {
+            return 0;
+        }
+
+        int totalBenefitQuantity = promotion.getTotalBenefitQuantity();
+        int currPromotionQuantity = promotionQuantity;
+        int currPurchaseQuantity = purchaseQuantity;
+        int count = 0;
+        while (currPromotionQuantity - totalBenefitQuantity >= 0 && currPurchaseQuantity > 0) {
+            currPromotionQuantity -= totalBenefitQuantity;
+            currPurchaseQuantity -= totalBenefitQuantity;
+            count++;
+        }
+
+        if (currPurchaseQuantity < 0) {
+            return purchaseQuantity;
+        }
+
+        return purchaseQuantity - count * totalBenefitQuantity;
+    }
+
+    private boolean isNotApplyPromotion(LocalDate date) {
+        if (promotion == null || !promotion.isApply(date)) {
+            return true;
+        }
+        return false;
     }
 }
