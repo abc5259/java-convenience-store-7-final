@@ -5,4 +5,7 @@ public record PurchaseInfo(
         int price,
         int quantity
 ) {
+    public int calculatePrice() {
+        return price * quantity;
+    }
 }

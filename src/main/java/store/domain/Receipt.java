@@ -43,4 +43,11 @@ public class Receipt {
     public int getDiscountAmount() {
         return memberShipDiscount.calculateDiscountAmount(this);
     }
+
+    public int getFinalAmount() {
+        int giveawayPrice = getGiveawayPurchaseInfo().stream()
+                .mapToInt(PurchaseInfo::calculatePrice)
+                .sum();
+        return getTotalAmount() - giveawayPrice - getDiscountAmount();
+    }
 }
