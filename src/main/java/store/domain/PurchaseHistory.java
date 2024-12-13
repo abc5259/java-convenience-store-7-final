@@ -13,4 +13,12 @@ public record PurchaseHistory(
     public PurchaseInfo getPurchaseInfo() {
         return new PurchaseInfo(orderItem.name(), product.getPrice(), orderItem.count());
     }
+
+    public PurchaseInfo getGiveawayPurchaseInfo(LocalDate date) {
+        return new PurchaseInfo(
+                orderItem.name(),
+                product.getPrice(),
+                product.calculateGiveawayQuantity(orderItem.count(), date)
+        );
+    }
 }

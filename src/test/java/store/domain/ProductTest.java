@@ -39,6 +39,31 @@ class ProductTest {
 
     @ParameterizedTest
     @CsvSource({
+            "7, 10, 2, 1, 2",
+            "10, 10, 1, 1, 5",
+            "3, 10, 1, 1, 1",
+    })
+    void 몇개를_증정받는지_계산한다(
+            int promotionQuantity,
+            int purchaseQuantity,
+            int buyCount,
+            int freeCount,
+            int expected) {
+        //given
+        LocalDate startDate = LocalDate.of(2024, 12, 11);
+        LocalDate endDate = LocalDate.of(2024, 12, 14);
+        Promotion promotion = new Promotion("test", buyCount, freeCount, startDate, endDate);
+        Product product = new Product("test", 1000, promotion, 10, promotionQuantity);
+
+        //when
+        int result = product.calculateGiveawayQuantity(purchaseQuantity, LocalDate.of(2024, 12, 12));
+
+        //then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
             "3, 2, 1",
             "4, 3, 0",
             "5, 3, 0",

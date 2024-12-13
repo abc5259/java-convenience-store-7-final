@@ -111,6 +111,15 @@ public class Product {
         return purchaseQuantity - count * totalBenefitQuantity;
     }
 
+    public int calculateGiveawayQuantity(int purchaseQuantity, LocalDate date) {
+        if (isNotApplyPromotion(date)) {
+            return 0;
+        }
+
+        int quantity = calculateOutOfPromotionQuantity(purchaseQuantity, date);
+        return (purchaseQuantity - quantity) / promotion.getTotalBenefitQuantity();
+    }
+
     private boolean isNotApplyPromotion(LocalDate date) {
         return promotion == null || !promotion.isApply(date);
     }

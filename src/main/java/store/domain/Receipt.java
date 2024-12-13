@@ -26,4 +26,11 @@ public class Receipt {
                 .map(PurchaseHistory::getPurchaseInfo)
                 .toList();
     }
+
+    public List<PurchaseInfo> getGiveawayPurchaseInfo() {
+        return purchaseHistories.stream()
+                .map(purchaseHistory -> purchaseHistory.getGiveawayPurchaseInfo(date))
+                .filter(purchaseInfo -> purchaseInfo.quantity() != 0)
+                .toList();
+    }
 }
