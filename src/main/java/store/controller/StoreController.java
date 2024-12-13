@@ -16,6 +16,6 @@ public class StoreController {
     }
 
     public void process(Map<String, Product> products) {
-
+        outputView.printHelloMessage();
     }
 }
