@@ -59,4 +59,8 @@ public class Product {
     public String getPromotionName() {
         return promotion.getName();
     }
+
+    public boolean canPurchase(int count) {
+        return this.simpleProductQuantity + this.promotionQuantity >= count;
+    }
 }
